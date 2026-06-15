@@ -11,8 +11,8 @@ const letter_transformations={
     "j":"i"
 }
 
-func set_status_tooltips():
- status_tooltips = [TileStatus.DEFAULT]
+#func set_status_tooltips():
+ #status_tooltips = [TileStatus.DEFAULT]
 
 
 func apply_to_tile(tile: Tile, _real_tile: Tile, is_preview: bool, _is_preview_update: bool):

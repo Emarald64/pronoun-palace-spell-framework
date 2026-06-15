@@ -1,3 +1,10 @@
 {
     "id": "spell_framework",
+    "packs":[
+        {
+            "path":"spell_framework.pck",
+            "override":true,
+            "phase":"early",
+        }
+    ]
 }

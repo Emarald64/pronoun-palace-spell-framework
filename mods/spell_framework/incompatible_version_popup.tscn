@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dwxnj1c0w8d1u"]
+
+[node name="Incompatible Version Popup" type="AcceptDialog" unique_id=2096030662]
+oversampling_override = 1.0
+title = "Incompatible Version"
+size = Vector2i(200, 107)
+visible = true
+content_scale_size = Vector2i(5, 5)
+
+[node name="Label" type="Label" parent="." unique_id=2007077023]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 192.0
+offset_bottom = 52.0
+theme_override_font_sizes/font_size = 24
