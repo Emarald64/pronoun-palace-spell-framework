@@ -2,7 +2,7 @@ extends Control
 
 @onready var mod_list=$"Mod list"
 
-func add_menu(name:String,menu:Node):
+func add_menu(mod_id:String,menu:Node):
 	var button = Button.new()
 	button.text=name
 	button.pressed.connect(hide)

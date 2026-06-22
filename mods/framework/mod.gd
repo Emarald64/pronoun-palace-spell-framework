@@ -29,6 +29,7 @@ func _on_scene_change()->void:
 		run_main_menu_additions(current_scene)
 
 func run_main_menu_additions(main_menu:MainMenu):
+	# Add mod section the settings menu
 	var settings_menu_panel=main_menu.get_node("HUD/SettingsMenu/OptionsMenu/PositionRoot/Panel")
 	var mod_settings_menu=load("res://mods/framework/mod_settings_menu.tscn").instantiate()
 	mod_settings_menu.visible=false
@@ -38,10 +39,14 @@ func run_main_menu_additions(main_menu:MainMenu):
 	tab_info.tab_control=mod_settings_menu.get_path()
 	var tab_controller:TabController=settings_menu_panel.get_node("Control/TabController")
 	tab_controller.tab_definitions.append(tab_info)
+	if tab_controller.is_node_ready():
+		tab_controller.update()
 	
+	# change charactor select script
 	var character_selector=main_menu.get_node("HUD/CharacterSelect/CharacterSelector")
 	change_script_and_copy_properties(character_selector,load("res://mods/framework/overrides/character_selector.gd"))
 	
+	# make character icon scroll
 	var icon_container_scroll=ScrollContainer.new()
 	icon_container_scroll.custom_minimum_size.x=160
 	icon_container_scroll.get_h_scroll_bar().custom_maximum_size.y=4
@@ -51,15 +56,16 @@ func run_main_menu_additions(main_menu:MainMenu):
 	var icon_selector:IconSelector=character_selector.get_node("PositionRoot/Panel/MarginContainer/HBoxContainer/VBoxContainer2/IconSelector")
 	var icon_container=icon_selector.get_node("IconContainer")
 	
-	icon_selector.add_child(icon_container_scroll)
-	icon_selector.remove_child(icon_container)
-	icon_container_scroll.add_child(icon_container)
-	icon_selector.move_child(icon_container_scroll,1)
+	var add_scroll_container=func ():
+		icon_selector.add_child(icon_container_scroll)
+		icon_selector.remove_child(icon_container)
+		icon_container_scroll.add_child(icon_container)
+		icon_selector.move_child(icon_container_scroll,1)
 	
-	icon_selector.ready.connect(func ():
-		icon_selector.container=icon_container
-		#icon_selector._ready()
-		,ConnectFlags.CONNECT_ONE_SHOT)
+	if icon_selector.is_node_ready():
+		add_scroll_container.call()
+	else:
+		icon_selector.ready.connect(add_scroll_container)
 	
 	icon_selector.selected.connect(func (icon):
 		icon_container_scroll.ensure_control_visible(icon)
@@ -70,9 +76,22 @@ func run_main_menu_additions(main_menu:MainMenu):
 
 	main_menu.get_node("HUD/PlayMenu/ContinueButton/HoverOffset/Panel/MarginContainer/VBoxContainer/TopContainer/RunIcons/Control2/CharacterIcon")\
 	.set_script(load("res://mods/framework/overrides/character_icon.gd"))
-
-	#current_scene.get_node("HUD/Phonebook/PositionRoot/Panel/MarginContainer/Clip/HBoxContainer/MarginContainer/PhonebookSelector").set_script(load("res://mods/framework/script_overrides/phonebook_selector.gd"))
-	#print("set phonebook selector_script")
+	
+	var phonebook=main_menu.get_node("HUD/Phonebook")
+	var phonebook_selector=phonebook.get_node("PositionRoot/Panel/MarginContainer/Clip/HBoxContainer/MarginContainer/PhonebookSelector")
+	
+	
+	if phonebook_selector.is_node_ready():
+		for child in phonebook_selector.vertical_container.get_children():
+			child.queue_free()
+		phonebook_selector.set_script(\
+			load("res://mods/framework/overrides/phonebook_selector.gd"))
+		phonebook_selector._ready()
+	else:
+		phonebook_selector.set_script(\
+			load("res://mods/framework/overrides/phonebook_selector.gd"))
+	
+	
 
 static func change_script_and_copy_properties(object:Object,script:Script):
 	# save all properties of main

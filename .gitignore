@@ -1,4 +1,11 @@
-*
+/*
 
 !mods
-!mod_packs/*/mod.json
+
+mods/*
+
+!mods/framework
+!mods/foggy_glasses
+
+!mod_packs/framework/mod.json
+!mod_packs/foggy_glasses/mod.json
