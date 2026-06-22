@@ -1,6 +1,6 @@
 class_name SpellFramework extends Mod
 
-const pronoun_palace_version="1.1.0"
+const pronoun_palace_version="1.1.1"
 
 static var spell_pool:Dictionary
 static var spell_categories:Dictionary=Globals.SPELL_CATEGORIES.duplicate(true)
