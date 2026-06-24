@@ -1,26 +1,52 @@
 [gd_scene format=3 uid="uid://g1dybr48h6i7"]
 
 [ext_resource type="Script" uid="uid://cqnya5ol21mx6" path="res://mods/framework/mod_options.gd" id="1_4c8ah"]
-[ext_resource type="PackedScene" uid="uid://dd2o8mw1v8juo" path="res://source/ui/menu/settings/input_guide.tscn" id="2_hcgfw"]
-[ext_resource type="PackedScene" uid="uid://bkxi3xipa3jye" path="res://source/ui/menu/settings/setting.tscn" id="3_usel8"]
 
-[node name="Test mod options" type="VBoxContainer" unique_id=874286168]
-offset_right = 90.0
-offset_bottom = 25.0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4c8ah"]
+content_margin_left = 4.0
+content_margin_right = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_njnkc"]
+content_margin_left = 4.0
+content_margin_right = 4.0
+bg_color = Color(0, 0, 0, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hcgfw"]
+content_margin_left = 4.0
+content_margin_right = 4.0
+bg_color = Color(0.225, 0.225, 0.225, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[node name="Mod options" type="VBoxContainer" unique_id=874286168]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_4c8ah")
 
 [node name="Back Button" type="Button" parent="." unique_id=1765286427]
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_4c8ah")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_njnkc")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hcgfw")
 text = "Back"
-
-[node name="CheckBox" type="CheckBox" parent="." unique_id=1417286289]
-layout_mode = 2
-text = "test option"
-
-[node name="InputGuide" parent="." unique_id=1467343028 instance=ExtResource("2_hcgfw")]
-layout_mode = 2
-
-[node name="Setting" parent="." unique_id=232054846 instance=ExtResource("3_usel8")]
-layout_mode = 2
 
 [connection signal="pressed" from="Back Button" to="." method="back"]

@@ -1,6 +1,6 @@
 extends PhonebookSelector
 
-var row_limit=5
+var row_limit=3
 
 var custom_phonebook_icon_scene=load("res://mods/framework/overrides/custom_phonebook_icon.tscn")
 var enemy_loader=load("res://mods/framework/enemy_loader.gd")

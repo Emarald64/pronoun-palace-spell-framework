@@ -6,6 +6,9 @@ static var spell_pool:Dictionary
 static var spell_categories:Dictionary=Globals.SPELL_CATEGORIES.duplicate(true)
 
 static var character_loader=load("res://mods/framework/character_loader.gd")
+static var mod_settings_menu:Control
+
+static var mod_settings_pages:Dictionary[String,Control]={}
 
 ## Adds a spell to the list of spells that can appear randomly
 ## A higher weight makes the spell appear more often
@@ -21,18 +24,18 @@ static func add_vanillia_spells()->void:
 		spell_pool={}
 	spell_pool.merge(Globals.SPELL_POOL)
 
-
 func _on_scene_change()->void:
 	var current_scene=get_tree().current_scene
-			
 	if current_scene is MainMenu:
 		run_main_menu_additions(current_scene)
 
 func run_main_menu_additions(main_menu:MainMenu):
 	# Add mod section the settings menu
 	var settings_menu_panel=main_menu.get_node("HUD/SettingsMenu/OptionsMenu/PositionRoot/Panel")
-	var mod_settings_menu=load("res://mods/framework/mod_settings_menu.tscn").instantiate()
+	mod_settings_menu=load("res://mods/framework/mod_settings_menu.tscn").instantiate()
 	mod_settings_menu.visible=false
+	
+	
 	settings_menu_panel.get_node("SectionedPanel/MainMask/MarginContainer/ScrollContainer/MarginContainer/ContentsBox/Game").add_sibling(mod_settings_menu)
 	var tab_info:=TabInfo.new()
 	tab_info.string_key="menu/settings/mods"
