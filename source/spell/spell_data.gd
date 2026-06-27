@@ -23,9 +23,9 @@ var use_while_selecting: = false
 var no_use_sound: = false
 var immediate_effect: = false
 
-static func load_random_charge_spells(spell_pool) -> void :
-	print("loading random charge spells")
+static func _static_init() -> void:
 	random_charge_spells.clear()
+	var spell_pool=Globals.SPELL_POOL
 	for spell in spell_pool:
 		var group: = StringManager.get_string_group("spell/" + spell)
 		if group.has_string("charge_characters"):
@@ -34,7 +34,6 @@ static func load_random_charge_spells(spell_pool) -> void :
 			var category: = group.get_string("charge_category")
 			if category not in Globals.SPECIAL_CHARGES:
 				random_charge_spells.append(spell)
-	print("loaded random charge spells")
  
 
 

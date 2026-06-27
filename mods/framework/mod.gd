@@ -1,10 +1,8 @@
 class_name SpellFramework extends Mod
 
-const pronoun_palace_version="1.1.1"
+const pronoun_palace_version="1.1.2"
 
-static var spell_pool:Dictionary
-static var spell_categories:Dictionary=Globals.SPELL_CATEGORIES.duplicate(true)
-
+static var spell_loader=load("res://mods/framework/spell_loader.gd")
 static var character_loader=load("res://mods/framework/character_loader.gd")
 static var mod_settings_menu:Control
 
@@ -13,16 +11,12 @@ static var mod_settings_pages:Dictionary[String,Control]={}
 ## Adds a spell to the list of spells that can appear randomly
 ## A higher weight makes the spell appear more often
 ## The catagory is used to determine whether it it will appear in the jubilist's boxes 
-static func add_spell(id:String,weight:float=1.0,catagory:String="")->void:
-	spell_pool[id]=weight
-	if catagory!="":
-		spell_categories[catagory].append(id)
-	print("added spell "+id)
+static func add_spell(id:String,weight:float=1.0,catagory=null)->void:
+	push_warning("calling add_spell through mod.gd is depriccated, please call add_spell through spell_loader now")
+	spell_loader.add_spell(id,weight,catagory)
 	
 static func add_vanillia_spells()->void:
-	if spell_pool==null:
-		spell_pool={}
-	spell_pool.merge(Globals.SPELL_POOL)
+	spell_loader.add_vanillia_spells()
 
 func _on_scene_change()->void:
 	var current_scene=get_tree().current_scene
@@ -112,12 +106,9 @@ static func change_script_and_copy_properties(object:Object,script:Script):
 	print("set properties")
 
 func _ready() -> void:
-	add_vanillia_spells()
-	load("res://source/spell/spell_data.gd").load_random_charge_spells(spell_pool)
 	var current_scene=get_tree().current_scene
 	if current_scene is MainMenu:
 		run_main_menu_additions(current_scene)
-	print("spell_catagories: "+str(spell_categories))
 	print("loaded spell framework")
 	#print("has globals: "+str(ProjectSettings.has_setting("autoload/Globals")))
 	#print("globals path: "+str(ProjectSettings.get_setting("autoload/Globals")))

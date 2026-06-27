@@ -13,13 +13,12 @@ var character_loader=load("res://mods/framework/character_loader.gd")
 
 func _ready() -> void:
 	print("using custom globals")
-	print("spell pool"+str(load("res://mods/framework/mod.gd").spell_pool))
 	#SpellData._static_init()
 
 func get_spell_pool(category = null):
 	print("loading custom spell pool")
-	var spell_framework=load("res://mods/framework/mod.gd")
-	var weighted_spells = spell_framework.spell_pool
+	var spell_loader=load("res://mods/framework/spell_loader.gd")
+	var weighted_spells = spell_loader.spell_pool
 	var spell_pool = {}
 
 	if category != null:
@@ -27,7 +26,7 @@ func get_spell_pool(category = null):
 
 	for spell in weighted_spells:
 		if is_spell_unlocked(spell):
-			spell_pool[spell] = spell_framework.spell_pool[spell]
+			spell_pool[spell] = spell_loader.spell_pool[spell]
 	print("spell pool "+str(spell_pool))
 	return spell_pool
 

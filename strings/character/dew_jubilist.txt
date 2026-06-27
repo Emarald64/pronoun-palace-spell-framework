@@ -10,7 +10,7 @@
 
 :spell_description:
 	Convert two random tiles to candy.
-	Convert the top four non-acid tiles to acid
+	Convert the topmost non-acid row to acid.
 
 :info_title:
 	Info
